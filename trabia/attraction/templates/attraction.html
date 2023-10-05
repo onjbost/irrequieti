@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{attr.name}} | Gli Irrequieti Trabia{% endblock title %}
+{% block keywords %}Trabia, Irrequeti, Lanza, Storia di Trabia, Tradizioni di Trabia, Eventi a Trabia, Cultura, Notizie su Trabia, Trabia turismo, Escursioni a Trabia, Itinerari Trabia, Vacanze a Trabia{% endblock keywords %}
+{% block description %}{{attr.intro}}{% endblock description %}
+
+
+{% block social_title %}{{attr.name}} | Gli Irrequieti Trabia{% endblock social_title %}
+{% block social_description %}{{attr.intro}}{% endblock social_description %}
+{% block social_img %}{{attr.img.url }}{% endblock social_img %}
+{% block social_url %}{% url 'attr' attr.slug %}{% endblock social_url %}
+
+
+{% block page_title %}<span class="text-primary">{{attr.name}}</span> <br> <a href="{% url 'attr_index' %}" class="btn btn-primary">Torna indietro</a>{% endblock page_title %}
+
+
+{% block breadcrumb %}
+
+<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'attr_index'%}">Attrazioni</a></li>
+<li class="breadcrumb-item text-white active" aria-current="page">{{attr.name}}</li>
+
+{% endblock breadcrumb %}
+
+{% block content %}
+<section class="container">
+    <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+    {% if user not in attr.liked.all %}
+    <a href="{% url 'like_attr' attr.id %}" class="btn rounded-circle btn-primary" id="Like"><i class="fa-solid fa-heart"></i></a> <label class="btn" for="Like">{{attr.num_likes}} Mi Piace</label>
+    {% else %}
+    <h5 class="text-primary"><a href="{% url 'like_attr' attr.id %}" class="text-primary" id="Like"><i class="fa-solid fa-heart"></i> {{attr.num_likes}}</a></h5><span>
+    {% endif %}
+    <h1 class="text-center">{{attr.name}}</h1>
+    <div class="container">
+        {{attr.description | safe}}
+    </div>
+    <br>
+    <div class="container">
+    {{attr.location | safe}}
+    </div>
+</section>
+{% endblock content %}

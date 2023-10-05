@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Blog | Gli Irrequieti Trabia{% endblock title %}
+{% block keywords %}Trabia, Irrequeti, Lanza, Storia di Trabia, Tradizioni di Trabia, Eventi a Trabia, Cultura, Notizie su Trabia, Trabia turismo, Escursioni a Trabia, Itinerari Trabia, Vacanze a Trabia{% endblock keywords %}
+{% block description %}Ciao da Gli Irrequieti Trabia! Esplora il fascino unico di Trabia attraverso i nostri occhi curiosi. Da eventi culturali a gemme nascoste, ti guidiamo alla scoperta di questo incantevole paese siciliano. Scopri la storia, le tradizioni e i luoghi da non perdere a Trabia. Condividiamo l'amore per questo gioiello della Sicilia con il mondo. Benvenuto nel cuore vibrante di Trabia, scopri con noi!{% endblock description %}
+
+
+{% block social_title %}Blog | Gli Irrequieti Trabia{% endblock social_title %}
+{% block social_description %}Ciao da Gli Irrequieti Trabia! Esplora il fascino unico di Trabia attraverso i nostri occhi curiosi. Da eventi culturali a gemme nascoste, ti guidiamo alla scoperta di questo incantevole paese siciliano. Scopri la storia, le tradizioni e i luoghi da non perdere a Trabia. Condividiamo l'amore per questo gioiello della Sicilia con il mondo. Benvenuto nel cuore vibrante di Trabia, scopri con noi!{% endblock social_description %}
+{% block social_img %}{% static 'img/back-hero.jpg' %}{% endblock social_img %}
+{% block social_url %}{% url 'story_index' %}{% endblock social_url %}
+
+
+
+
+{% block page_title %}
+{% if tag %}
+Tag: <span class="text-primary"> {{tag}}</span>
+{% else %}
+Trabia: <span class="text-primary"> Storie da Raccontare</span>
+{% endif %}
+{% endblock page_title %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'story_index' %}">Blog</a></li>
+        {% if tag %}
+        <li class="breadcrumb-item text-white active" aria-current="page">{{tag}}</li>
+        {% endif %}
+{% endblock breadcrumb %}
+{% block content %}
+
+<!-- Team Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        {% if not tag %}
+        <section class="tag-list text-center mb-5">
+            <h6 class="section-title bg-white text-center text-primary px-3">Categorie</h6>
+            <h3 class="">Scegli la categoria di post che vuoi visualizzare</h3>
+            
+            {% for tag in mc %}
+                <a href="{% url 'tagged' tag.slug %}" class="btn btn-outline-warning">{{tag}}</a>
+            {% endfor %}
+            
+        </section>
+        {% endif %}
+        <section>
+        <div class="text-center wow fadeInUp text-center" id="items" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Le Storie</h6>
+            <h1 class="mb-5">Di un Paese Meraviglioso</h1>
+        </div>
+        <div class="row g-4">
+            {% for story in page %}
+            <article class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" width="inherit" src="{{ story.img.url }}" alt="{{story.name}}">
+                    </div>
+
+                    <div class="text-center p-4">
+                        <a href="{% url 'views_add' story.id %}">
+                            <h5 class="mb-0">{{story.name}}</h5>
+                        </a>
+                        <!-- <p class="mb-2">
+                            Tag:
+                            {% for tag in story.tag.all %}
+                            <a href="{% url 'tagged' tag.slug %}" class="btn btn-sm">{{tag}}</a>
+                            {% endfor %}
+                        </p> -->
+                        <p class="mb-2">
+                            <a alt="mi piace" class="text-primary"><i class="fa-solid fa-heart"></i> {{story.num_likes}}</a>
+                            <a alt="visualizzazioni" class="text-primary"><i class="fa-solid fa-eye"></i> {{story.total_views}}</a>
+                        </p>
+                        
+                        <a href="{% url 'views_add' story.id %}" class="btn btn-sm btn-outline-primary ">Leggi di Più</a>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+            
+        </div>
+        </section>
+        <!-- Pagination  -->
+        <section class="text-center d-flex align-items-center justify-content-center">
+
+        {% if page.has_previous %}
+        <a href="?page={{page.previous_page_number}}#items" class="btn btn-outline-warning"><i class="fa-solid fa-arrow-left"></i></a>
+        {% endif %}
+
+        {% for i in nums %}
+        {% if forloop.counter == page.number %}
+        <a href="?page={{ forloop.counter }}#items" class="text-center btn btn-warning disabled">{{ forloop.counter }}</a>
+        {% else %}
+        <a href="?page={{ forloop.counter }}#items" class="text-center btn btn-outline-warning">{{ forloop.counter }}</a>
+        {% endif %}
+        {% endfor %}
+
+        {% if page.has_next %}
+        <a href="?page={{page.next_page_number}}#items" class="btn btn-outline-warning"><i class="fa-solid fa-arrow-right"></i></a>
+        {% endif %}
+        </section>
+        <!-- Pagination End -->
+    </div>
+</div>
+<!-- Team End -->
+{% endblock content %}
+{% block scripts %}{% endblock scripts %}

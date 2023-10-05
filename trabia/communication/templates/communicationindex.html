@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Comunicazioni | Trabia{% endblock title %}
+{% block description %}{% endblock description %}
+{% block page_title %}Comunicazioni <span class="text-primary">Importanti</span>{% endblock page_title %}
+{% block breadcrumb %}
+
+<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item text-white active" aria-current="page">Comunicazioni</li>
+
+{% endblock breadcrumb %}
+{% block content %}
+
+
+<!-- Team Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Comunicazioni</h6>
+            <h1 class="mb-5">Si informa che...</h1>
+        </div>
+        <div class="row g-4">
+            {% if comunications %}
+            {% for com in comunications %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item">
+                    <div class="text-center p-4">
+                        <a href="{% url 'com' com.slug %}">
+                            <h5 class="mb-0">{{com.subject}}</h5>
+                        </a>
+                        <small>{{com.date}}}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h1 class="text-center">Ci scusiamo per il disagio ma al momento non è presente alcuna comunicazione</h1>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+
+{% endblock content %}

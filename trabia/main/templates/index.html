@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Trabia | Un Paese Da Scoprire{% endblock title %}
+{% block keywords %}Trabia, Irrequeti, Lanza, Storia di Trabia, Tradizioni di Trabia, Eventi a Trabia, Cultura, Notizie su Trabia, Trabia turismo, Escursioni a Trabia, Itinerari Trabia, Vacanze a Trabia{% endblock keywords %}
+{% block description %}Scopri la bellezza di Trabia, un affascinante paese che fonde storia, cultura e paesaggi mozzafiato. Pianifica la tua visita esplorando le spiagge incontaminate, assaporando la cucina locale nei migliori ristoranti, e immergendoti nelle tradizioni autentiche. Trova informazioni su eventi, alloggi, e itinerari per vivere un'esperienza indimenticabile a Trabia, il cuore autentico della Sicilia.{% endblock description %}
+
+
+{% block social_title %}Trabia | Un Paese Da Scoprire{% endblock social_title %}
+{% block social_description %}Scopri la bellezza di Trabia, un affascinante paese che fonde storia, cultura e paesaggi mozzafiato. Pianifica la tua visita esplorando le spiagge incontaminate, assaporando la cucina locale nei migliori ristoranti, e immergendoti nelle tradizioni autentiche. Trova informazioni su eventi, alloggi, e itinerari per vivere un'esperienza indimenticabile a Trabia, il cuore autentico della Sicilia.{% endblock social_description %}
+{% block social_img %}{% static 'img/back-hero.jpg' %}{% endblock social_img %}
+{% block social_url %}www.glirrequietitrabia.it{% endblock social_url %}
+
+
+{% block page_title %}Benvenuti a <span class="text-primary">Trabia</span>{% endblock page_title %}
+
+
+{% block content %}
+
+    <!-- About Start -->
+    <section class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-3 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                    <div class="position-relative shadow-lg rounded h-100">
+                        <img class="img-fluid position-absolute w-100 h-100" src="{% static 'img/start.jpg'%}" style="object-fit: fill;" alt="L'Arco di Fuori Porta">
+                    </div>
+                </div>
+                <div class="col-lg-9 wow fadeInUp" data-wow-delay="0.3s">
+                    <h6 class="section-title bg-white text-start text-primary pe-3">Il Paese</h6>
+                    <h1 class="mb-4">Benvenuti a <span class="text-primary">Trabia</span></h1>
+                    <p class="mb-4">Scopri Trabia, un tesoro storico-culturale sulla costa tirrenica palermitana. Situata su una collina a soli 50 metri s.l.m.,
+                        questa affascinante località offre un'esperienza di soggiorno vantaggiosa per i turisti. Con residence, alberghi e bed&breakfast di qualità,
+                        Trabia ti accoglie con comfort e autenticità. Goditi la facilità di accesso ai centri storici circostanti grazie ai mezzi pubblici efficienti.
+                        Esplora le meraviglie di Trabia e immergiti nella sua ricca storia e nel suo incantevole patrimonio culturale, per vivere un'esperienza indimenticabile
+                        in Sicilia.</p>
+                        <div class="text-center">
+                        <h6 class="section-title bg-white text-start text-primary pe-3">Visualizzazioni al sito</h6>
+                        <h4><i class="fas fa-eye"></i> {{main.total_views}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About End -->
+
+    <!-- Story start -->ù
+    {% if stories %}
+    <section class="mt-5">
+        <div class="container text-center">
+            <h6 class="section-title bg-white text-start text-primary pe-3">Le Storie</h6>
+            <h1 class="mb-4">Di un Fantastico <span class="text-primary">Paese</span></h1>
+            <div class="owl-carousel testimonial-carousel position-relative carousel-fade">
+                {% for sto in stories %}
+                <article class="testimonial-item text-center">
+                    <img src="{{sto.img.url}}" class="d-block w-100" alt="{{sto.name}}">
+                    <div style="background-color: rgba(0,0,0,0.5);" class="carousel-caption d-none d-md-block">
+                        <h5 class="text-light bg-primary bg-gradient">{{sto.name}}</h5>
+                        <p class="">{{sto.intro |  slice:25}}...</p>
+                        <a href="{% url 'views_add' sto.id %}" class="btn btn-primary btn-sm mb-2">Leggi di più</a>
+                        <p class="mb-2">
+                            <a alt="mi piace" class="text-dark"><i class="fa-solid fa-heart"></i> {{sto.num_likes}}</a>
+                            <a alt="visualizzazioni" class="text-dark"><i class="fa-solid fa-eye"></i> {{sto.total_views}}</a>
+                        </p>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Story End -->
+
+    <!-- Service Start -->
+    {% if services %}
+    <section class="container-xxl py-5">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Services</h6>
+                <h1 class="mb-5">Servizi</h1>
+            </div>
+            <div class="row g-4">
+                {% for service in services %}
+
+                <div class="col-lg-3 col-sm-6 wow fadeInUp text-center" data-wow-delay="0.1s">
+                    <div class="service-item rounded pt-3">
+                        <div class="p-4">
+                            <i class="fa fa-3x fa-globe text-primary mb-4"></i>
+                            <a href="{% url 'service_cat' service.slug %}"><h5>{{service.name}}</h5></a>
+                            <p>Diam elitr kasd sed at elitr sed ipsum justo dolor sed clita amet diam</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Service End -->
+
+    {% if attractions %}
+    <!-- Attrazioni Start -->
+    <section class="container-xxl py-5 destination">
+        <div class="container">
+            <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                <h6 class="section-title bg-white text-center text-primary px-3">Da Vedere a Trabia</h6>
+                <h1 class="mb-5">Maggiori Attrazioni</h1>
+            </div>
+            <div class="row g-3">
+                <div class="col-lg-12 col-md-12">
+                    <div class="row g-3">
+                        {% for attr in attractions%}
+                        <div class="col-lg-6 col-md-6 wow zoomIn" data-wow-delay="0.1s">
+                            <a class="position-relative d-block overflow-hidden" href="{% url 'attr' attr.slug %}">
+                                <img class="img-fluid" src="{{ attr.image.url }}" alt="{{attr.name}}">
+                                <div class="bg-white text-primary fw-bold position-absolute bottom-0 end-0 m-3 py-1 px-2">{{ attr.name }}</div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Attrazioni Start -->
+
+
+
+    <!-- Testimonial Start -->
+    {% if comunications %}
+    <section class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center">
+                <h6 class="section-title bg-white text-center text-primary px-3">Comunicazioni</h6>
+                <h1 class="mb-5">Comunicazioni Importanti</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel position-relative">
+                {% for com in comunications %}
+                <div class="testimonial-item bg-white text-center border p-4">
+                    <a href="{% url 'com' com.slug %}">
+                    <h5 class="mb-0">{{com.name}}</h5>
+                    </a>
+                    <p>{{com.date}}</p>
+                    <p class="mb-0">{{com.subject}}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    <!-- Testimonial End -->
+
+    {% endblock content %}
+
+    {% block scripts %}
+    {% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{story.name}} | Gli Irrequieti Trabia{% endblock title %}
+{% block keywords%}{% for tag in story.tag.all %}{{tag}},{% endfor %}{% endblock %}
+{% block description %}{{story.intro}}{% endblock description %}
+
+{% block social_title %}{{story.name}}{% endblock social_title %}
+{% block social_description %}{{story.intro}}{% endblock social_description %}
+{% block social_img %}{{story.img.url}}{% endblock social_img %}
+{% block social_url %}{% url 'story' story.slug %}{% endblock social_url %}
+
+{% block page_title %}<span class="text-primary">{{story.name}}</span> {% endblock page_title %}
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'story_index'%}">Storie</a></li>
+        <li class="breadcrumb-item text-white active" aria-current="page">{{story.name}}</li>
+{% endblock breadcrumb %}
+
+{% block content %}
+<section class="container d-flex">
+    <h6>Condividi: </h6>
+    <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+
+    {% if user not in story.liked.all %}
+    <a href="{% url 'like_story' story.id %}" class="btn rounded-circle btn-primary" id="Like"><i class="fa-solid fa-heart"></i></a> <label class="btn" for="Like">{{story.num_likes}} Mi Piace</label>
+    {% else %}
+    <h5 class="text-primary"><a href="{% url 'like_story' story.id %}" class="text-primary" id="Like"><i class="fa-solid fa-heart"></i> {{story.num_likes}}</a></h5><span>
+    {% endif %}
+
+    <h5 class="text-primary"><i class="fa-solid fa-eye"></i> {{story.total_views}}</h5>
+
+    <hr>
+</section>
+
+
+<section class="container">
+<div class="container">
+    <h1>Indice: </h1>
+    {{ story.outline | safe}}
+    <h1>Introduzione: </h1>
+    {{ story.intro | safe}}
+    {{ story.body | safe}}
+    <h1>Fonti: </h1>
+    {{ story.fonti | safe}}
+
+    <small>
+        Tag:
+    {% for tag in story.tag.all %}
+        <a href="{% url "tagged" tag.slug %}" class="btn btn-sm btn-outline-warning text-bold ">{{ tag }}</a>
+    {% endfor %}
+    </small>
+</div>
+</section>
+
+
+{% if story.iframe %}
+<section data-bs-version="5.1" class="text-center">
+    <div class="container">
+    {{story.iframe | safe}}
+    </div>
+</section>
+{% endif %}
+
+<!-- Other Story Start -->
+<section class="mt-5">
+    <div class="container text-center">
+        <h6 class="section-title bg-white text-start text-primary pe-3">Altre Storie</h6>
+        <h1 class="mb-4">Leggi Altre Storie</span></h1>
+        <div class="owl-carousel testimonial-carousel position-relative ">
+            {% for sto in stories %}
+            <div class="testimonial-item bg-white text-center border p-4">
+                {% if sto.img %}
+                <img class="bg-white rounded-circle shadow p-1 mx-auto mb-3" src="{{sto.img.url}}" alt="{{sto.name}}" style="width: 80px; height: 80px;">
+                {% endif %}
+                <a href="{% url 'views_add' story.id %}"><h5 class="mb-0">{{sto.name}}</h5></a>
+                <p class="mb-0">{{sto.intro | safe | slice:80}}...</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Other Story End -->
+
+
+{% endblock content %}

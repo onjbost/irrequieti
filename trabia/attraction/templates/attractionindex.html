@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Posti da Visitare| Gli Irrequieti Trabia{% endblock title %}
+{% block keywords %}Trabia, Irrequeti, Lanza, Storia di Trabia, Tradizioni di Trabia, Eventi a Trabia, Cultura, Notizie su Trabia, Trabia turismo, Escursioni a Trabia, Itinerari Trabia, Vacanze a Trabia{% endblock keywords %}
+{% block description %}Esplora i tesori nascosti di Trabia con Gli Irrequieti! Scopri la nostra selezione di posti da visitare, dai luoghi storici alle bellezze naturali. Pianifica la tua avventura attraverso le strade pittoresche e le gemme autentiche di Trabia. Dai un'occhiata ai nostri consigli su cosa vedere e vivi un'esperienza indimenticabile nel cuore della Sicilia. Preparati a immergerti nelle meraviglie di Trabia con la nostra guida appassionata.{% endblock description %}
+
+
+{% block social_title %}Posti da visitare | Gli Irrequieti Trabia{% endblock social_title %}
+{% block social_description %}Esplora i tesori nascosti di Trabia con Gli Irrequieti Trabia! Scopri la nostra selezione di posti da visitare, dai luoghi storici alle bellezze naturali. Pianifica la tua avventura attraverso le strade pittoresche e le gemme autentiche di Trabia. Dai un'occhiata ai nostri consigli su cosa vedere e vivi un'esperienza indimenticabile nel cuore della Sicilia. Preparati a immergerti nelle meraviglie di Trabia con la nostra guida appassionata.{% endblock social_description %}
+{% block social_img %}{% static 'img/back-hero.jpg'%}{% endblock social_img %}
+{% block social_url %}{% url 'attr_index'%}{% endblock social_url %}
+
+{% block page_title %}Maggiori <span class="text-primary">Attrazioni</span>{% endblock page_title %}
+
+{% block breadcrumb %}
+
+<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item text-white active" aria-current="page">Attrazioni</li>
+
+{% endblock breadcrumb %}
+{% block content %}
+
+<!-- Team Start -->
+<section class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Attrazioni</h6>
+            <h1 class="mb-5">Da Visitare</h1>
+        </div>
+        <div class="row g-4">
+            {% for attr in attrs %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="team-item">
+                    <div class="overflow-hidden">
+                        <img class="img-fluid" width="inherit" src="{{attr.image.url}}" alt="{{attr.name}}">
+                    </div>
+
+                    <div class="text-center p-4">
+                        <a href="{% url 'attr' attr.slug %}">
+                            <h5 class="mb-0">{{attr.name}}</h5>
+                        </a>
+                        <span class="mb-2 flex">
+                            <h6 class="text-primary"><i class="fa-solid fa-heart"></i> {{attr.num_likes}}</h6>
+                            
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- Team End -->
+
+
+{% endblock content %}

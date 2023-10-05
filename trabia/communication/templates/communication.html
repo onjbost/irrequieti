@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}{{comunication.name}} | Trabia{% endblock title %}
+{% block description %}{% endblock description %}
+{% block head %}
+    <meta property="og:title" content="Trabia - {{comunication.name}}">
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="">
+    <meta property="og:url" content="{% url 'com' comunication.id %}">
+    <meta name="twitter:card" content="summary_large_image">
+{% endblock head %}
+{% block page_title %}<span class="text-primary">{{comunication.name}}</span>{% endblock page_title %}
+{% block breadcrumb %}
+  
+<li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'com_index' %}">Comunicazioni</a></li>
+<li class="breadcrumb-item text-white active" aria-current="page">{{comunication.name}}</li>
+
+{% endblock breadcrumb %}
+{% block content %}
+<div class="container">
+<h1 class="text-center">{{comunication.subject}}</h1>
+<div class="text-center">{{comunication.body | safe}}</div>
+<p class="text-right">{{comunication.date}}</p>
+<a href="https://www.comunetrabia.it/">Comune di Trabia</a>
+<!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+</div>
+{% endblock content %}
